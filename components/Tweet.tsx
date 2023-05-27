@@ -1,16 +1,51 @@
 import { StyleSheet, Image, Text, View } from "react-native";
 import { TweetType } from "../types";
+import { Entypo, EvilIcons } from "@expo/vector-icons";
+import React from "react";
 
 type TweetProps = {
   tweet: TweetType;
 };
+type IconButtonProps = {
+  icon: React.ComponentProps<typeof EvilIcons>["name"];
+  text?: number | string;
+};
+const IconButton = ({ icon, text }: IconButtonProps) => (
+  <View style={{ flexDirection: "row", alignItems: "center" }}>
+    {/* icon */}
+
+    <EvilIcons name={icon} size={22} color={"gray"} />
+
+    {/* number */}
+    <Text style={{ fontSize: 12, color: "gray" }}>{text}</Text>
+  </View>
+);
 const Tweet = ({ tweet }: TweetProps) => {
   return (
     <View style={styles.container}>
       <Image src={tweet.user.image} style={styles.userImage} />
       <View style={styles.mainContainer}>
-        <Text style={styles.name}>{tweet.user.name}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.name}>{tweet.user.name}</Text>
+          <Text style={styles.username}>{tweet.user.username} ·2h</Text>
+          <Entypo
+            name="dots-three-horizontal"
+            size={24}
+            color="gray"
+            style={{ marginLeft: "auto" }}
+          />
+        </View>
+
         <Text style={styles.content}>{tweet.content}</Text>
+
+        {tweet.image && <Image src={tweet.image} style={styles.image} />}
+        <View style={styles.footer}>
+          <IconButton icon="comment" text={tweet.numberOfComments} />
+          <IconButton icon="retweet" text={tweet.numberOfRetweets} />
+          <IconButton icon="heart" text={tweet.numberOfLikes} />
+          <IconButton icon="chart" text={tweet.impressions || 0} />
+          <IconButton icon="share-apple" />
+        </View>
       </View>
     </View>
   );
@@ -32,9 +67,25 @@ const styles = StyleSheet.create({
   name: {
     fontWeight: "600",
   },
+  username: {
+    color: "grey",
+    marginLeft: 5,
+  },
   content: {
     lineHeight: 20,
     marginTop: 5,
+  },
+  image: {
+    aspectRatio: 16 / 9,
+    width: "100%",
+    marginTop: 10,
+    borderRadius: 15,
+    marginVertical: 10,
+  },
+  footer: {
+    flexDirection: "row",
+    marginVertical: 5,
+    justifyContent: "space-between",
   },
 });
 

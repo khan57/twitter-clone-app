@@ -14,5 +14,7 @@ export type User = {
     numberOfComments?: number;
     numberOfRetweets?: number;
     numberOfLikes?: number;
+    impressions?: number;
+
   };
   
