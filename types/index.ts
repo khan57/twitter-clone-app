@@ -9,7 +9,7 @@ export type User = {
     user: User;
     id:string,
     createdAt: string;
-    updatedAt:string;
+    updatedAt?:string;
     image?:string;
     numberOfComments?: number;
     numberOfRetweets?: number;

@@ -1,6 +1,7 @@
 const tweets = [
   {
     id: 't0',
+    
     user: {
       id: 'u1',
       username: 'VadimNotJustDev',
@@ -19,6 +20,7 @@ const tweets = [
   {
     id: '111111111',
     createdAt: '2023-04-28T08:30:00.000Z',
+    
     user: {
       id: '123456789',
       name: 'Jeff B',
