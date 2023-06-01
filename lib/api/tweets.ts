@@ -19,3 +19,23 @@ export const listTweets = async () => {
   const data = await res.json();
   return data;
 };
+
+
+export const getTweet = async(id:string)=>{
+    const res = await fetch(`${API_URL}/tweet/${id}`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+    
+      if (res.status === 401) {
+        throw new Error("Not authorized.Please login");
+       }
+      if (res.status !== 200) {
+       throw new Error("Error fetching the tweet detail");
+      }
+    
+      const data = await res.json();
+      return data;
+
+}
