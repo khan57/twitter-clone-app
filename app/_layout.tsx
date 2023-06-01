@@ -8,12 +8,13 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
-
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from "expo-router";
 
+const client = new QueryClient();
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: "(drawer)",
@@ -44,18 +45,22 @@ function RootLayoutNav() {
 
   return (
     <>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-          {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-          <Stack.Screen name="tweet/[id]" options={{ title: "Tweet" }} />
-          <Stack.Screen
-            name="new-tweet"
-            options={{ title: "New Tweet", headerShown: false }}
-          />
-        </Stack>
-      </ThemeProvider>
+      <QueryClientProvider client={client}>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <Stack>
+            <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+            {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
+            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+            <Stack.Screen name="tweet/[id]" options={{ title: "Tweet" }} />
+            <Stack.Screen
+              name="new-tweet"
+              options={{ title: "New Tweet", headerShown: false }}
+            />
+          </Stack>
+        </ThemeProvider>
+      </QueryClientProvider>
     </>
   );
 }
